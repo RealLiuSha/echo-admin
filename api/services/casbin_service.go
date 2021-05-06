@@ -5,6 +5,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/RealLiuSha/echo-admin/models/dto"
+
 	"github.com/casbin/casbin/v2"
 	casbinModel "github.com/casbin/casbin/v2/model"
 	"github.com/casbin/casbin/v2/persist"
@@ -104,7 +106,10 @@ func (a CasbinAdapter) LoadPolicy(model casbinModel.Model) error {
 
 // load role policy (p,role_id,path,method)
 func (a CasbinAdapter) loadRolePolicy(m casbinModel.Model) error {
-	roleQR, err := a.roleRepository.Query(&models.RoleQueryParam{Status: 1})
+	paginationParam := dto.PaginationParam{PageSize: 9999, Current: 1}
+	roleQR, err := a.roleRepository.Query(&models.RoleQueryParam{
+		Status: 1, PaginationParam: paginationParam,
+	})
 
 	if err != nil {
 		return err
@@ -112,7 +117,9 @@ func (a CasbinAdapter) loadRolePolicy(m casbinModel.Model) error {
 		return nil
 	}
 
-	roleMenuQR, err := a.roleMenuRepository.Query(&models.RoleMenuQueryParam{})
+	roleMenuQR, err := a.roleMenuRepository.Query(&models.RoleMenuQueryParam{
+		PaginationParam: paginationParam,
+	})
 
 	if err != nil {
 		return err
@@ -121,7 +128,7 @@ func (a CasbinAdapter) loadRolePolicy(m casbinModel.Model) error {
 	mRoleMenus := roleMenuQR.List.ToRoleIDMap()
 
 	menuResourceQR, err := a.menuActionResourceRepository.Query(
-		&models.MenuActionResourceQueryParam{},
+		&models.MenuActionResourceQueryParam{PaginationParam: paginationParam},
 	)
 
 	if err != nil {
@@ -162,14 +169,20 @@ func (a CasbinAdapter) loadRolePolicy(m casbinModel.Model) error {
 
 // load user policy (g,user_id,role_id)
 func (a CasbinAdapter) loadUserPolicy(m casbinModel.Model) error {
-	userQR, err := a.userRepository.Query(&models.UserQueryParam{Status: 1})
+	paginationParam := dto.PaginationParam{PageSize: 9999, Current: 1}
+
+	userQR, err := a.userRepository.Query(&models.UserQueryParam{
+		Status: 1, PaginationParam: paginationParam,
+	})
 
 	if err != nil {
 		return err
 	}
 
 	if len(userQR.List) > 0 {
-		userRoleQR, err := a.userRoleRepository.Query(&models.UserRoleQueryParam{})
+		userRoleQR, err := a.userRoleRepository.Query(&models.UserRoleQueryParam{
+			PaginationParam: paginationParam,
+		})
 
 		if err != nil {
 			return err

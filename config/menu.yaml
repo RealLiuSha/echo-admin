@@ -41,6 +41,8 @@
           resources:
             - method: GET
               path: "/api/v1/menus"
+            - method: GET
+              path: "/api/v1/publics/sys/routes"
         - code: disable
           name: 禁用
           resources:
