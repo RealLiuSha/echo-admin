@@ -4,7 +4,13 @@
  基于 Echo + Gorm + Casbin + Uber-FX 实现的 RBAC 权限管理脚手架，致力于提供一套尽可能轻量且优雅的中后台解决方案。
 <br/>
 
-[![ReportCard][reportcard-image]][reportcard-url] [![GoDoc][godoc-image]][godoc-url] [![License][license-image]][license-url]
+<div align=center>
+<img src="https://img.shields.io/badge/golang-1.12-blue"/>
+<img src="https://img.shields.io/badge/echo-4.2.2-lightBlue"/>
+<img src="https://img.shields.io/badge/gorm-1.21.8-red"/>
+<img src="https://img.shields.io/badge/casbin-2.26.0-brightgreen"/>
+<img src="https://img.shields.io/badge/vue-2.6.12-green"/>
+</div>
 
 </div>
 
