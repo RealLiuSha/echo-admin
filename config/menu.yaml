@@ -3,9 +3,15 @@
 - name: 首页
   icon: home
   sequence: 1000
+  actions:
+    - code: visible
+      name: 可见
 - name: 系统管理
   icon: setting
   sequence: 1100
+  actions:
+    - code: visible
+      name: 可见
   children:
     - name: 菜单管理
       icon: menu
@@ -14,7 +20,7 @@
       sequence: 1101
       actions:
         - code: add
-          name: 新增
+          name: 新建
           resources:
             - method: POST
               path: "/api/v1/menus"
@@ -25,7 +31,7 @@
               path: "/api/v1/menus/:id"
             - method: PUT
               path: "/api/v1/menus/:id"
-        - code: del
+        - code: delete
           name: 删除
           resources:
             - method: DELETE
@@ -35,8 +41,6 @@
           resources:
             - method: GET
               path: "/api/v1/menus"
-            - method: GET
-              path: "/api/v1/menus.tree"
         - code: disable
           name: 禁用
           resources:
@@ -57,19 +61,19 @@
           name: 新增
           resources:
             - method: GET
-              path: "/api/v1/menus.tree"
+              path: "/api/v1/menus"
             - method: POST
               path: "/api/v1/roles"
         - code: edit
           name: 编辑
           resources:
             - method: GET
-              path: "/api/v1/menus.tree"
+              path: "/api/v1/menus"
             - method: GET
               path: "/api/v1/roles/:id"
             - method: PUT
               path: "/api/v1/roles/:id"
-        - code: del
+        - code: delete
           name: 删除
           resources:
             - method: DELETE
@@ -99,19 +103,19 @@
           name: 新增
           resources:
             - method: GET
-              path: "/api/v1/roles.select"
+              path: "/api/v1/roles"
             - method: POST
               path: "/api/v1/users"
         - code: edit
           name: 编辑
           resources:
             - method: GET
-              path: "/api/v1/roles.select"
+              path: "/api/v1/roles"
             - method: GET
               path: "/api/v1/users/:id"
             - method: PUT
               path: "/api/v1/users/:id"
-        - code: del
+        - code: delete
           name: 删除
           resources:
             - method: DELETE
