@@ -1,5 +1,5 @@
 <div align=center>
-<img src="https://images.liusha.me/common/logo.png" width=300" height="300" />
+<img src="https://images.liusha.me/common/logo.png" width=200" height="200" />
 </div>
 
 <h1 align="center">Echo-Admin</h1>

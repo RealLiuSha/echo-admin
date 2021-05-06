@@ -1,0 +1,612 @@
+basePath: /
+definitions:
+  database.Datetime:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  dto.CaptchaVerify:
+    properties:
+      code:
+        type: string
+      id:
+        type: string
+    required:
+    - code
+    - id
+    type: object
+  dto.Login:
+    properties:
+      captcha_code:
+        type: string
+      captcha_id:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - captcha_code
+    - captcha_id
+    - password
+    - username
+    type: object
+  dto.Pagination:
+    properties:
+      current:
+        type: integer
+      page_size:
+        type: integer
+      total:
+        type: integer
+    type: object
+  echox.Response:
+    properties:
+      data:
+        type: object
+      message:
+        type: object
+    type: object
+  models.Menu:
+    properties:
+      actions:
+        items:
+          $ref: '#/definitions/models.MenuAction'
+        type: array
+      component:
+        type: string
+      created_at:
+        $ref: '#/definitions/database.Datetime'
+      created_by:
+        type: string
+      icon:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      parent_id:
+        type: string
+      parent_path:
+        type: string
+      remark:
+        type: string
+      router:
+        type: string
+      sequence:
+        type: integer
+      show_status:
+        type: integer
+      status:
+        type: integer
+      updated_at:
+        $ref: '#/definitions/database.Datetime'
+    required:
+    - icon
+    - name
+    - remark
+    - sequence
+    - show_status
+    - status
+    type: object
+  models.MenuAction:
+    properties:
+      code:
+        type: string
+      created_at:
+        $ref: '#/definitions/database.Datetime'
+      id:
+        type: string
+      menu_id:
+        type: string
+      name:
+        type: string
+      resources:
+        items:
+          $ref: '#/definitions/models.MenuActionResource'
+        type: array
+      updated_at:
+        $ref: '#/definitions/database.Datetime'
+    required:
+    - code
+    - name
+    type: object
+  models.MenuActionResource:
+    properties:
+      created_at:
+        $ref: '#/definitions/database.Datetime'
+      method:
+        type: string
+      path:
+        type: string
+      updated_at:
+        $ref: '#/definitions/database.Datetime'
+    required:
+    - method
+    - path
+    type: object
+  models.MenuQueryResult:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/models.Menu'
+        type: array
+      pagination:
+        $ref: '#/definitions/dto.Pagination'
+    type: object
+info:
+  contact:
+    email: i@liusha.me
+    name: LiuSha
+paths:
+  /api/menus:
+    get:
+      parameters:
+      - in: query
+        name: current
+        type: integer
+      - in: query
+        name: direction
+        type: string
+      - in: query
+        items:
+          type: string
+        name: ids
+        type: array
+      - in: query
+        name: includeActions
+        type: boolean
+      - in: query
+        name: key
+        type: string
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: parentID
+        type: string
+      - in: query
+        name: prefixParentPath
+        type: string
+      - in: query
+        name: queryValue
+        type: string
+      - in: query
+        name: showStatus
+        type: integer
+      - in: query
+        name: status
+        type: integer
+      - in: query
+        name: tree
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            allOf:
+            - $ref: '#/definitions/echox.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.MenuQueryResult'
+              type: object
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Menu Query
+      tags:
+      - Menu
+    post:
+      parameters:
+      - description: Menu
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Menu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Menu Create
+      tags:
+      - Menu
+  /api/menus/{id}:
+    delete:
+      parameters:
+      - description: menu id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Menu Delete By ID
+      tags:
+      - Menu
+    get:
+      parameters:
+      - description: menu id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            allOf:
+            - $ref: '#/definitions/echox.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Menu'
+              type: object
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Menu Get By ID
+      tags:
+      - Menu
+    put:
+      parameters:
+      - description: menu id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Menu
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Menu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Menu Update By ID
+      tags:
+      - Menu
+  /api/menus/{id}/actions:
+    get:
+      parameters:
+      - description: menu id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            allOf:
+            - $ref: '#/definitions/echox.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.MenuAction'
+                  type: array
+              type: object
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: MenuActions Get By menuID
+      tags:
+      - Menu
+    put:
+      parameters:
+      - description: menu id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Menu
+        in: body
+        name: data
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.MenuAction'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Menu Actions Update By menuID
+      tags:
+      - Menu
+  /api/menus/{id}/disable:
+    patch:
+      parameters:
+      - description: menu id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Menu Disable By ID
+      tags:
+      - Menu
+  /api/menus/{id}/enable:
+    patch:
+      parameters:
+      - description: menu id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Menu Enable By ID
+      tags:
+      - Menu
+  /api/public/captcha:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Get Captcha
+      tags:
+      - Public
+  /api/public/captcha/verify:
+    post:
+      parameters:
+      - description: CaptchaVerify
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CaptchaVerify'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: bad request
+          schema:
+            type: string
+      summary: Verify Captcha
+      tags:
+      - Public
+  /api/publics/sys/routes:
+    post:
+      parameters:
+      - description: Login
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "500":
+          description: internal error
+          schema:
+            type: string
+      summary: UserLogin
+      tags:
+      - Public
+  /api/publics/user:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "500":
+          description: internal error
+          schema:
+            type: string
+      summary: UserInfo
+      tags:
+      - Public
+  /api/publics/user/login:
+    post:
+      parameters:
+      - description: Login
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "500":
+          description: internal error
+          schema:
+            type: string
+      summary: UserLogin
+      tags:
+      - Public
+  /api/publics/user/logout:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      summary: UserLogout
+      tags:
+      - Public
+  /api/publics/user/menutree:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "500":
+          description: internal error
+          schema:
+            type: string
+      summary: UserMenuTree
+      tags:
+      - Public
+  /api/users:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success":true,"data":{},"msg":"登陆成功"}'
+          schema:
+            type: string
+      summary: 获取用户列表
+      tags:
+      - Base
+schemes:
+- http
+- https
+securityDefinitions:
+  X-Auth-Token:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

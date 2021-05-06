@@ -1,0 +1,56 @@
+Name: clean-web
+
+Log:
+  Level: debug
+  Format: console
+  Directory: ./logs
+  Development: true
+
+HTTP:
+  Host: 0.0.0.0
+  Port: 2222
+
+SuperAdmin:
+  Username: root
+  Realname: 超级管理员
+  Password: 123123
+
+Auth:
+  Enable: false
+  TokenExpired: 7200
+  IgnorePathPrefixes:
+    - /pprof
+    - /swagger
+    - /api/v1/publics/captcha
+    - /api/v1/publics/user/login
+
+Casbin:
+  Enable: true
+  Debug: false
+  AutoLoad: false
+  AutoLoadInternal: 10
+  IgnorePathPrefixes:
+    - /pprof
+    - /swagger
+    - /api/v1/publics/user
+    - /api/v1/publics/captcha
+
+Redis:
+  Host: 172.16.217.2
+  Port: 6379
+  DBIndex: 3
+  Password: redispass
+  KeyPrefix: r
+
+Database:
+  Engine: mysql
+  Name: clean
+  Host: 172.16.217.2
+  Port: 3306
+  Username: root
+  Password: sqlpass
+  TablePrefix: t
+  Parameters: charset=utf8mb4&parseTime=True&loc=Local&allowNativePasswords=true&timeout=5s
+  MaxLifetime: 7200
+  MaxOpenConns: 150
+  MaxIdleConns: 50
