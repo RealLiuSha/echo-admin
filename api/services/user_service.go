@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"sort"
 
 	"gorm.io/gorm"
@@ -106,7 +105,6 @@ func (a UserService) Verify(username, password string) (*models.User, error) {
 		return nil, err
 	}
 
-	fmt.Println(user.Password, hash.SHA256(password), "\n\n\n")
 	if user.Password != hash.SHA256(password) {
 		return nil, errors.UserInvalidPassword
 	} else if user.Status != 1 {
