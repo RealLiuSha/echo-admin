@@ -88,7 +88,7 @@ func (a MenuController) Create(ctx echo.Context) error {
 	}
 
 	trxHandle := ctx.Get(constants.DBTransaction).(*gorm.DB)
-	claims, _ := ctx.Get(constants.CurrentUser).(dto.JwtClaims)
+	claims, _ := ctx.Get(constants.CurrentUser).(*dto.JwtClaims)
 	menu.CreatedBy = claims.Username
 
 	id, err := a.menuService.WithTrx(trxHandle).Create(menu)

@@ -61,7 +61,7 @@ func (a UserController) Create(ctx echo.Context) error {
 		return echox.Response{Code: http.StatusBadRequest, Message: errors.UserPasswordRequired}.JSON(ctx)
 	}
 
-	claims, _ := ctx.Get(constants.CurrentUser).(dto.JwtClaims)
+	claims, _ := ctx.Get(constants.CurrentUser).(*dto.JwtClaims)
 	user.CreatedBy = claims.Username
 
 	qr, err := a.userService.WithTrx(trxHandle).Create(user)

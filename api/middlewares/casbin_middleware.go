@@ -3,6 +3,9 @@ package middlewares
 import (
 	"net/http"
 
+	"github.com/RealLiuSha/echo-admin/constants"
+	"github.com/RealLiuSha/echo-admin/models/dto"
+
 	"github.com/RealLiuSha/echo-admin/api/services"
 	"github.com/RealLiuSha/echo-admin/lib"
 	"github.com/RealLiuSha/echo-admin/pkg/echox"
@@ -45,8 +48,9 @@ func (a CasbinMiddleware) core() echo.MiddlewareFunc {
 
 			p := ctx.Request().URL.Path
 			m := ctx.Request().Method
+			claims, _ := ctx.Get(constants.CurrentUser).(*dto.JwtClaims)
 
-			if ok, err := a.casbinService.Enforcer.Enforce("freedie.liu", p, m); err != nil {
+			if ok, err := a.casbinService.Enforcer.Enforce(claims.ID, p, m); err != nil {
 				return echox.Response{Code: http.StatusForbidden, Message: err}.JSON(ctx)
 			} else if !ok {
 				return echox.Response{Code: http.StatusForbidden}.JSON(ctx)

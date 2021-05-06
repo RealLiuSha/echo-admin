@@ -72,7 +72,7 @@ func (a RoleController) Create(ctx echo.Context) error {
 	}
 
 	trxHandle := ctx.Get(constants.DBTransaction).(*gorm.DB)
-	claims, _ := ctx.Get(constants.CurrentUser).(dto.JwtClaims)
+	claims, _ := ctx.Get(constants.CurrentUser).(*dto.JwtClaims)
 	role.CreatedBy = claims.Username
 
 	id, err := a.roleService.WithTrx(trxHandle).Create(role)

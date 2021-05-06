@@ -135,7 +135,7 @@ func (a PublicController) UserLogin(ctx echo.Context) error {
 // @Success 200 {string} echox.Response "success"
 // @Router /api/publics/user/logout [post]
 func (a PublicController) UserLogout(ctx echo.Context) error {
-	claims, ok := ctx.Get(constants.CurrentUser).(dto.JwtClaims)
+	claims, ok := ctx.Get(constants.CurrentUser).(*dto.JwtClaims)
 	if ok {
 		a.authService.DestroyToken(claims.Username)
 	}
