@@ -1,7 +1,13 @@
+<div align=center>
+<img src="https://images.liusha.me/common/logo.png" width=300" height="300" />
+</div>
+
 <h1 align="center">Echo-Admin</h1>
 
 <div align="center">
  基于 Echo + Gorm + Casbin + Uber-FX 实现的 RBAC 权限管理脚手架，致力于提供一套尽可能轻量且优雅的中后台解决方案。
+ 
+<br/>
 <br/>
 
 <div align=center>
