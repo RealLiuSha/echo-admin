@@ -55,7 +55,7 @@ git clone https://github.com/RealLiuSha/echo-admin
 
 **生成文档**
 
-当你完善了项目中的  文档需要重新生成，只需要执行以下指令
+当你完善了项目中的 swagger 文档需要重新生成，执行以下指令
 
 ```
 make swagger
@@ -63,7 +63,7 @@ make swagger
 
 **项目初始化**
 
-`echo-admin` 通过 `makefile` 预设了一些指令，详情可自行查阅
+`echo-admin` 通过 `makefile` 预设了一些指令，详情可自行[查阅](https://github.com/RealLiuSha/echo-admin/blob/main/Makefile)
 
 首次启动本项目前需要相对应的修改配置文件 `config/config.yaml`， 你至少需要保证 `mysql` 和 `redis` 的相关配置正确，随后你可以通过以下指令完成表的新建和数据的初始化 
 
