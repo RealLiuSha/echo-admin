@@ -43,6 +43,11 @@
               path: "/api/v1/menus"
             - method: GET
               path: "/api/v1/publics/sys/routes"
+        - code: query-actions
+          name: 查询动作
+          resources:
+            - method: GET
+              path: "/api/v1/menus/:id/actions"
         - code: disable
           name: 禁用
           resources:
@@ -85,6 +90,8 @@
           resources:
             - method: GET
               path: "/api/v1/roles"
+            - method: GET
+              path: "/api/v1/roles/:id"
         - code: disable
           name: 禁用
           resources:
