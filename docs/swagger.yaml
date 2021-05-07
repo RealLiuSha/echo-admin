@@ -62,6 +62,8 @@ definitions:
         $ref: '#/definitions/database.Datetime'
       created_by:
         type: string
+      hidden:
+        type: integer
       icon:
         type: string
       id:
@@ -78,18 +80,16 @@ definitions:
         type: string
       sequence:
         type: integer
-      show_status:
-        type: integer
       status:
         type: integer
       updated_at:
         $ref: '#/definitions/database.Datetime'
     required:
+    - hidden
     - icon
     - name
     - remark
     - sequence
-    - show_status
     - status
     type: object
   models.MenuAction:
@@ -137,9 +137,118 @@ definitions:
       pagination:
         $ref: '#/definitions/dto.Pagination'
     type: object
+  models.Role:
+    properties:
+      created_at:
+        $ref: '#/definitions/database.Datetime'
+      created_by:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      remark:
+        type: string
+      role_menus:
+        items:
+          $ref: '#/definitions/models.RoleMenu'
+        type: array
+      sequence:
+        type: integer
+      status:
+        type: integer
+      updated_at:
+        $ref: '#/definitions/database.Datetime'
+    required:
+    - name
+    - remark
+    - sequence
+    - status
+    type: object
+  models.RoleMenu:
+    properties:
+      action_id:
+        type: string
+      created_at:
+        $ref: '#/definitions/database.Datetime'
+      id:
+        type: string
+      menu_id:
+        type: string
+      role_id:
+        type: string
+      updated_at:
+        $ref: '#/definitions/database.Datetime'
+    required:
+    - action_id
+    - menu_id
+    - role_id
+    type: object
+  models.RoleQueryResult:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/models.Role'
+        type: array
+      pagination:
+        $ref: '#/definitions/dto.Pagination'
+    type: object
+  models.User:
+    properties:
+      created_at:
+        $ref: '#/definitions/database.Datetime'
+      created_by:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      realname:
+        type: string
+      status:
+        type: integer
+      updated_at:
+        $ref: '#/definitions/database.Datetime'
+      user_roles:
+        items:
+          $ref: '#/definitions/models.UserRole'
+        type: array
+      username:
+        type: string
+    required:
+    - realname
+    - status
+    - username
+    type: object
+  models.UserQueryResult:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+      pagination:
+        $ref: '#/definitions/dto.Pagination'
+    type: object
+  models.UserRole:
+    properties:
+      created_at:
+        $ref: '#/definitions/database.Datetime'
+      id:
+        type: string
+      role_id:
+        type: string
+      updated_at:
+        $ref: '#/definitions/database.Datetime'
+      user_id:
+        type: string
+    type: object
 info:
   contact:
-    email: i@liusha.me
+    email: liusha@email.cn
     name: LiuSha
 paths:
   /api/menus:
@@ -151,6 +260,9 @@ paths:
       - in: query
         name: direction
         type: string
+      - in: query
+        name: hidden
+        type: integer
       - in: query
         items:
           type: string
@@ -177,9 +289,6 @@ paths:
       - in: query
         name: queryValue
         type: string
-      - in: query
-        name: showStatus
-        type: integer
       - in: query
         name: status
         type: integer
@@ -589,18 +698,451 @@ paths:
       summary: UserMenuTree
       tags:
       - Public
-  /api/users:
+  /api/roles:
     get:
+      parameters:
+      - in: query
+        name: current
+        type: integer
+      - in: query
+        name: direction
+        type: string
+      - in: query
+        items:
+          type: string
+        name: ids
+        type: array
+      - in: query
+        name: key
+        type: string
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: queryValue
+        type: string
+      - in: query
+        name: status
+        type: integer
+      - in: query
+        name: userID
+        type: string
       produces:
       - application/json
       responses:
         "200":
-          description: success":true,"data":{},"msg":"登陆成功"}'
+          description: ok
           schema:
-            type: string
-      summary: 获取用户列表
+            allOf:
+            - $ref: '#/definitions/echox.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Role'
+                  type: array
+              type: object
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Role Get All
       tags:
-      - Base
+      - Role
+    post:
+      parameters:
+      - description: Role
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Role'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Role Create
+      tags:
+      - Role
+  /api/roles/{id}:
+    delete:
+      parameters:
+      - description: role id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Role Delete By ID
+      tags:
+      - Role
+    get:
+      parameters:
+      - description: role id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            allOf:
+            - $ref: '#/definitions/echox.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Role'
+              type: object
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Role Get By ID
+      tags:
+      - Role
+    put:
+      parameters:
+      - description: role id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Role
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Role'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Role Update By ID
+      tags:
+      - Role
+  /api/roles/{id}/disable:
+    patch:
+      parameters:
+      - description: role id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Role Disable By ID
+      tags:
+      - Role
+  /api/roles/{id}/enable:
+    patch:
+      parameters:
+      - description: role id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: Role Enable By ID
+      tags:
+      - Role
+  /api/users:
+    get:
+      parameters:
+      - in: query
+        name: current
+        type: integer
+      - in: query
+        name: direction
+        type: string
+      - in: query
+        name: key
+        type: string
+      - in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: queryPassword
+        type: boolean
+      - in: query
+        name: queryValue
+        type: string
+      - in: query
+        name: realname
+        type: string
+      - in: query
+        items:
+          type: string
+        name: roleIDs
+        type: array
+      - in: query
+        name: status
+        type: integer
+      - in: query
+        name: username
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            allOf:
+            - $ref: '#/definitions/echox.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.UserQueryResult'
+              type: object
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: User Query
+      tags:
+      - User
+    post:
+      parameters:
+      - description: User
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: User Create
+      tags:
+      - User
+  /api/users/{id}:
+    delete:
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: User Delete By ID
+      tags:
+      - User
+    get:
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            allOf:
+            - $ref: '#/definitions/echox.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.User'
+              type: object
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: User Get By ID
+      tags:
+      - User
+    put:
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: User Update By ID
+      tags:
+      - User
+  /api/users/{id}/disable:
+    patch:
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: User Disable By ID
+      tags:
+      - User
+  /api/users/{id}/enable:
+    patch:
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echox.Response'
+        "500":
+          description: internal error
+          schema:
+            $ref: '#/definitions/echox.Response'
+      summary: User Enable By ID
+      tags:
+      - User
 schemes:
 - http
 - https

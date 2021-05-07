@@ -14,7 +14,7 @@ import (
 // @schemes http https
 // @basePath /
 // @contact.name LiuSha
-// @contact.email i@liusha.me
+// @contact.email liusha@email.cn
 type SwaggerRoutes struct {
 	config  lib.Config
 	logger  lib.Logger
