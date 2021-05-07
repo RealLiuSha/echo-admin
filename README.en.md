@@ -35,8 +35,6 @@ English | [简体中文](https://github.com/RealLiuSha/echo-admin/blob/main/READ
 
 ## Synopsis
 
-`echo-admin` is a separate management system based on vue and go that integrates excellent open source framework and toolkit.
-
 welcome PR and Issue.
 
 [Online Demo](https://admin.srelab.cn)
