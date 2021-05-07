@@ -1147,7 +1147,7 @@ schemes:
 - http
 - https
 securityDefinitions:
-  X-Auth-Token:
+  Authorization:
     in: header
     name: Authorization
     type: apiKey

@@ -8,7 +8,7 @@ import (
 	"github.com/RealLiuSha/echo-admin/lib"
 )
 
-// @securityDefinitions.apikey X-Auth-Token
+// @securityDefinitions.apikey Authorization
 // @in header
 // @name Authorization
 // @schemes http https

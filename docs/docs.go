@@ -1812,7 +1812,7 @@ var doc = `{
         }
     },
     "securityDefinitions": {
-        "X-Auth-Token": {
+        "Authorization": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
