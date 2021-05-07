@@ -6,7 +6,7 @@
 
 <div align="center">
  基于 Echo + Gorm + Casbin + Uber-FX 实现的 RBAC 权限管理脚手架，致力于提供一套尽可能轻量且优雅的中后台解决方案。
- 
+
 <br/>
 <br/>
 
@@ -18,7 +18,10 @@
 <img src="https://img.shields.io/badge/vue-2.6.12-green"/>
 </div>
 
+<br/>
 </div>
+
+[English](https://github.com/RealLiuSha/echo-admin/blob/main/README.en.md) | 简体中文
 
 ## 特性
 * 遵循 `RESTful API` 设计规范
@@ -29,7 +32,7 @@
 * 支持 `Swagger` 文档 (基于 `swaggo`)
 * 配置化、模块化
 
-## 基本介绍
+## 简介
 
 `echo-admin` 是基于 vue 和 go 整合了优秀的开源框架和工具包实现的前后端分离的管理系统，集成了基本的用户认证、角色管理、动态菜单和权限控制，让任何可能的使用者把时间专注在业务开发上。
 
@@ -41,10 +44,11 @@
 密码: 123123
 ```
 
-
 [前端项目源码](https://github.com/RealLiuSha/echo-admin-ui)
 
 ## 使用说明
+
+欢迎 PR 和 Issue，理想情况下，我都会尽快处理和回复，感谢你关注甚至使用 `echo-admin`。
 
 **开发语言推荐版本**
 
