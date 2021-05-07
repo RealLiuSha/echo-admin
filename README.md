@@ -44,6 +44,8 @@
 密码: 123123
 ```
 
+[Swagger 文档](https://admin.srelab.cn/swagger/index.html)
+
 [前端项目源码](https://github.com/RealLiuSha/echo-admin-ui)
 
 ## 使用说明

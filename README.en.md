@@ -38,6 +38,8 @@ English | [简体中文](https://github.com/RealLiuSha/echo-admin/blob/main/READ
 welcome PR and Issue.
 
 [Online Demo](https://admin.srelab.cn)
+
+[Swagger](https://admin.srelab.cn/swagger/index.html)
  
 ```
 # readonly account
