@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/RealLiuSha/echo-admin/constants"
 	"github.com/RealLiuSha/echo-admin/errors"
 	"github.com/go-redis/cache/v8"
 	"github.com/go-redis/redis/v8"
@@ -22,7 +23,7 @@ func NewRedis(config Config, logger Logger) Redis {
 
 	client := redis.NewClient(&redis.Options{
 		Addr:     addr,
-		DB:       config.Redis.DBIndex,
+		DB:       constants.RedisMainDB,
 		Password: config.Redis.Password,
 	})
 

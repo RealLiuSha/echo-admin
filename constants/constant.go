@@ -13,3 +13,7 @@ const CaptchaExpireTimes = 90
 // echo
 const CurrentUser = "current-user"
 const RoutesCacheKey = "routes"
+
+// RedisDB
+const RedisMainDB = 0
+const RedisTaskDB = 1

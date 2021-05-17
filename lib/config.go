@@ -136,7 +136,6 @@ type DatabaseConfig struct {
 type RedisConfig struct {
 	Host      string `mapstructure:"Host"`
 	Port      int    `mapstructure:"Port"`
-	DBIndex   int    `mapstructure:"DBIndex"`
 	Password  string `mapstructure:"Password"`
 	KeyPrefix string `mapstructure:"KeyPrefix"`
 }

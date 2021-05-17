@@ -38,7 +38,6 @@ Casbin:
 Redis:
   Host: 172.16.217.2
   Port: 6379
-  DBIndex: 3
   Password: redispass
   KeyPrefix: r
 
