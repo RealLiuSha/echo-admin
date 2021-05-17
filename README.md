@@ -11,10 +11,10 @@
 <br/>
 
 <div align=center>
-<img src="https://img.shields.io/badge/golang-1.12-blue"/>
-<img src="https://img.shields.io/badge/echo-4.2.2-lightBlue"/>
-<img src="https://img.shields.io/badge/gorm-1.21.8-red"/>
-<img src="https://img.shields.io/badge/casbin-2.26.0-brightgreen"/>
+<img src="https://img.shields.io/badge/golang-1.16-blue"/>
+<img src="https://img.shields.io/badge/echo-4.3.0-lightBlue"/>
+<img src="https://img.shields.io/badge/gorm-1.21.9-red"/>
+<img src="https://img.shields.io/badge/casbin-2.30.1-brightgreen"/>
 <img src="https://img.shields.io/badge/vue-2.6.12-green"/>
 </div>
 
