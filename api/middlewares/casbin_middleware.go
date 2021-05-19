@@ -48,7 +48,10 @@ func (a CasbinMiddleware) core() echo.MiddlewareFunc {
 
 			p := ctx.Request().URL.Path
 			m := ctx.Request().Method
-			claims, _ := ctx.Get(constants.CurrentUser).(*dto.JwtClaims)
+			claims, ok := ctx.Get(constants.CurrentUser).(*dto.JwtClaims)
+			if !ok {
+				return echox.Response{Code: http.StatusUnauthorized}.JSON(ctx)
+			}
 
 			if ok, err := a.casbinService.Enforcer.Enforce(claims.ID, p, m); err != nil {
 				return echox.Response{Code: http.StatusForbidden, Message: err}.JSON(ctx)
