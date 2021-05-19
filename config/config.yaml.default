@@ -16,7 +16,7 @@ SuperAdmin:
   Password: 123123
 
 Auth:
-  Enable: false
+  Enable: true
   TokenExpired: 7200
   IgnorePathPrefixes:
     - /pprof
