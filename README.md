@@ -36,7 +36,7 @@
 
 `echo-admin` 是基于 vue 和 go 整合了优秀的开源框架和工具实现的中后台管理系统，集成了用户认证、角色管理、动态菜单和权限控制，让任何可能的使用者把时间专注在业务开发上。
 
-[在线预览](https://admin.srelab.cn)
+[在线预览](https://admin.liusha.me)
  
 ```
 # 只读账号
@@ -44,7 +44,7 @@
 密码: 123123
 ```
 
-[Swagger 文档](https://admin.srelab.cn/swagger/index.html)
+[Swagger 文档](https://admin.liusha.me/swagger/index.html)
 
 [前端项目源码](https://github.com/RealLiuSha/echo-admin-ui)
 
